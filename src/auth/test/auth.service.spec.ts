@@ -1,21 +1,70 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from '../auth.service'; // Importation du service à tester
 
-describe('AuthService', () => { // Déclaration d'une suite de tests pour le AuthService
-    let service: AuthService; // Déclaration d'une variable pour stocker le service à tester
-    
-    beforeEach(async () => {
-        // Avant chaque test, crée un module de test avec le AuthService comme fournisseur de service
-        const module: TestingModule = await Test.createTestingModule({
-            providers: [AuthService], // Liste des services à inclure dans le module de test
-        }).compile(); // Compile le module de test
-        
-        service = module.get<AuthService>(AuthService); // Récupère une instance du service du conteneur d'injection de dépendances
-    });
-    
-    // Définition d'un test
-    it('should be defined', () => {
-        // Vérifie que le service est défini (non nul)
-        expect(service).toBeDefined();
-    });
+
+describe('AuthService', () => {
+  let authService: AuthService;
+
+  beforeEach(async () => {
+      const module: TestingModule = await Test.createTestingModule({
+          providers: [AuthService],
+      }).compile();
+
+      authService = module.get<AuthService>(AuthService);
+  });
+
+  it('should be defined', () => {
+      expect(authService).toBeDefined();
+  });
+
+  describe('signup', () => {
+      it('should create a new user when valid data is provided', async () => {
+          const userData = {
+              username: 'testuser',
+              password: 'password',
+              // other relevant data
+          };
+          const createdUser = await authService.signup(userData);
+          
+          // Assertions
+          expect(createdUser).toBeDefined();
+          expect(createdUser.username).toEqual(userData.username);
+      });
+
+      it('should throw an error when invalid data is provided', async () => {
+          const userData = {
+              // incomplete or invalid data
+          };
+
+          // Assertions using Jest's toThrow
+          await expect(authService.signup(userData)).rejects.toThrow();
+      });
+  });
+
+  describe('signin', () => {
+      it('should return a JWT token when valid credentials are provided', async () => {
+          const credentials = {
+              username: 'testuser',
+              password: 'password',
+          };
+          const jwtToken = await authService.signin(credentials);
+
+          // Assertions
+          expect(jwtToken).toBeDefined();
+          // Additional assertions about token validity, format, etc.
+      });
+
+      it('should throw an error when invalid credentials are provided', async () => {
+          const credentials = {
+              username: 'testuser',
+              password: 'wrongpassword',
+          };
+
+          // Assertions using Jest's toThrow
+          await expect(authService.signin(credentials)).rejects.toThrow();
+      });
+  });
+
+  // Add more test cases for other methods of the AuthService if applicable
+
 });
