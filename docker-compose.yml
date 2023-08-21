@@ -1,11 +1,16 @@
 services:
-    db:
-      image: mysql
-      environment:
-        MYSQL_ROOT_PASSWORD: optiteam
-    phpMyAdmin:
-      image: phpmyadmin
-      environment:
-        PMA_ARBITRARY: 1
-      ports:
-        - "8080:80"
+  db:
+    image: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: optiteam
+      MYSQL_DATABASE: optiteam
+      MYSQL_USER: optiteam  # Ajout de cette ligne pour spécifier le nom d'utilisateur
+  phpMyAdmin:
+    image: phpmyadmin
+    environment:
+      PMA_ARBITRARY: 1
+    ports:
+      - "8080:80"
+
