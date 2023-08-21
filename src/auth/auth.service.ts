@@ -7,6 +7,6 @@ export class AuthService {
     }
 
     signin() {
-        return {msg: 'sin'}
+        return {msg: 'sing'}
     }
 }
