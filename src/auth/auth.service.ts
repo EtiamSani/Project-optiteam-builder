@@ -38,7 +38,26 @@ export class AuthService {
         }
     }
 
-    signin() {
-        return {msg: 'sing'}
+    async signin(dto : AuthDto) {
+
+        const user = await this.prisma.user.findUnique({
+            where:{
+                email:dto.email,
+            }
+        })
+        // Ici j'utilise la fonctionnalité Guard de nest afin de rejeter les tentatives de connection avec des adresses mail est inexistant 
+
+        if (!user)
+        throw new ForbiddenException('Credentials incorrect',
+    );
+
+    const passwordMatches = await argon.verify(user.password, dto.password);
+
+    if (!passwordMatches)
+    throw new ForbiddenException('Credentials incorrect',
+    );
+
+    delete user.password;
+        return user;
     }
 }
