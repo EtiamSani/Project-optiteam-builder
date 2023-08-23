@@ -5,23 +5,29 @@ import * as argon from 'argon2';
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { JwtService } from "@nestjs/jwt";
 import { ConfigService } from "@nestjs/config";
+// import {ErrorHandler, PrismaErrorHandler } from "./src/errors";
+import { CredentialsIncorrectException } from "../errors/httpExeption";
+import { ErrorHandlerService } from "../errors/errorHandler.service";
+
 
 @Injectable({})
 export class AuthService {
-    constructor(private prisma: PrismaService, private jwt: JwtService, private config: ConfigService) {
-
+    
+    constructor(private prisma: PrismaService, private jwt: JwtService, private config: ConfigService, private errorHandlerService: ErrorHandlerService) {
     }
+
     async signup(dto : AuthDto) {
         const password = await argon.hash(dto.password);
-        const username = dto.username;
-        console.log(username)
+        // const prismaErrorHandler = new PrismaErrorHandler();
+        // const errorHandler = new ErrorHandler([prismaErrorHandler]);
+        
         try {
             
             const user = await this.prisma.user.create({
                 data: {
                     email: dto.email,
                     password,
-                    username,
+                    username :dto.username,
                 },
     
             });
@@ -30,10 +36,7 @@ export class AuthService {
             // récupérer les erreurs envoyé par prisma
             if (error instanceof PrismaClientKnownRequestError) { 
                 // Code erreur spécifique pour signaler quand un champs unique a été violé 
-                if (error.code === 'P2002') {
-                    throw new ForbiddenException('Credentials taken'
-                    );
-                }
+                this.errorHandlerService.handle(error);
             }
             throw error;
         }
@@ -49,14 +52,12 @@ export class AuthService {
         // Ici j'utilise la fonctionnalité Guard de nest afin de rejeter les tentatives de connection avec des adresses mail est inexistant 
 
         if (!user)
-        throw new ForbiddenException('Credentials incorrect',
-    );
+        throw new CredentialsIncorrectException();
 
     const passwordMatches = await argon.verify(user.password, dto.password);
 
     if (!passwordMatches)
-    throw new ForbiddenException('Credentials incorrect',
-    );
+    throw new CredentialsIncorrectException();
 
         return this.signToken(user.id, user.email);
     }
