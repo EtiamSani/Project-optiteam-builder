@@ -57,6 +57,7 @@ import { CreateTeamDto } from 'src/team/dto';
               })
           })
 
+
           describe('Create team for employee', () => {
             const dto: CreateTeamDto = {
               name: 'Bob team', 
@@ -112,51 +113,45 @@ import { CreateTeamDto } from 'src/team/dto';
             
           });
 
-          describe('Delete employee', () => {
+          
+          
+            describe('Get employees', () => {
+                it('should get employees', () => {
+                  return pactum
+                    .spec()
+                    .get('/employees')
+                    .expectStatus(200)
+                    .expectJsonLength(1);
+                });
+            })
+      
+
+         
+            describe('Delete employee', () => {
+              it('should delete employee', () => {
+                return pactum
+                  .spec()
+                  .delete('/employees/{id}')
+                  .expectStatus(204)
+                  .withPathParams('id', '$S{employeeId}')
+              });
+          })
             
-          });
+          
 
           describe('Get one employee by id', () => {
-            
+            it('should find one employee', () => {
+              return pactum
+                .spec()
+                .get('/employees/{id}')
+                .withPathParams('id', '$S{employeeId}')
+                // .withHeaders({
+                //   Authorization: 'Bearer $S{userAt}',
+                // })
+                .expectStatus(200)
+                .expectBodyContains('$S{employeeId}');
+            });
           });
-
-            // describe('Find All Employees', () => {
-            //     it('should find all employees', () => {
-            //       return pactum
-            //         .spec()
-            //         .get('/users/employees')
-            //         .expectStatus(400);
-            //     });
-            //     it('should find one employee', () => {
-            //       return pactum
-            //         .spec()
-            //         .get('/users/employees')
-            //         .expectStatus(400);
-            //     });
-            //     it('should create an employee', () => {
-            //         return pactum
-            //           .spec()
-            //           .get('/users/employees')
-            //           .expectStatus(400);
-            //       });
-            //       it('should delete an employee', () => {
-            //         return pactum
-            //           .spec()
-            //           .get('/users/employees')
-            //           .expectStatus(400);
-            //       });
-            //       it('should update an employee', () => {
-            //         return pactum
-            //           .spec()
-            //           .get('/users/employees')
-            //           .expectStatus(400);
-            //       });
-            // })
-            
-            
-        })
-
-       
-        
+        })  
     })
 })

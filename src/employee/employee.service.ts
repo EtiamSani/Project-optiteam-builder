@@ -52,4 +52,12 @@ export class EmployeeService {
         return editEmployee
         
     }
+
+    async deleteEmployee (employeeId: number) {
+        await this.prisma.employee.delete({
+            where: {
+                id: employeeId,
+            }
+        })
+    }
 }
