@@ -6,8 +6,8 @@ import { CreateEmployeeDto, EditEmployeeDto } from './dto';
 export class EmployeeService {
     constructor(private prisma: PrismaService) {}
     
-    getEmployeesWithSkills() {
-        return this.prisma.employee.findMany({
+    async getEmployeesWithSkills() {
+        const employee = this.prisma.employee.findMany({
             include: {
                 skills: {
                     include: {
@@ -16,6 +16,16 @@ export class EmployeeService {
                 }
             }
         });
+        return employee;
+    }
+
+    async getEmployeesWithSkillsById(employeeId:number) {
+        const employee = this.prisma.employee.findUnique({
+            where: {
+                id: employeeId
+            }
+        })
+        return employee;
     }
 
     async createEmployee (dto : CreateEmployeeDto) {

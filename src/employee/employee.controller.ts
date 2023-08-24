@@ -11,6 +11,11 @@ export class EmployeeController {
         return this.employeeService.getEmployeesWithSkills();
     }
 
+    @Get(':id')
+    getEmployeesById(@Param('id', ParseIntPipe) employeeId: number){
+        return this.employeeService.getEmployeesWithSkillsById(employeeId);
+    }
+
     @Post()
     createEmployee (@Body() dto: CreateEmployeeDto,
     ) {
