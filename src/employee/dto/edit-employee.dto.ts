@@ -1,23 +1,27 @@
 import {
-    IsNotEmpty,
-    IsOptional,
-    IsString,
-  } from 'class-validator';
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
-  export class EditEmployeeDto {
-    @IsString()
-    @IsOptional()
-    lastname?: string;
-    @IsString()
-    @IsOptional()  
-    firstname?: string;
-    @IsString()
-    @IsOptional()
-    job?: string; 
-    @IsString()
-    @IsOptional()        
-    personality?: string;
-    @IsNotEmpty()  
-    @IsOptional()
-    teamId?: number;
-  }
+export class EditEmployeeDto {
+  @IsNotEmpty()
+  @IsString()
+  @IsOptional()
+  lastname?: string;
+  @IsNotEmpty()
+  @IsString()
+  @IsOptional()
+  firstname?: string;
+  @IsNotEmpty()
+  @IsString()
+  @IsOptional()
+  job?: string;
+  @IsNotEmpty()
+  @IsString()
+  @IsOptional()
+  personality?: string;
+  @IsNotEmpty()
+  @IsOptional()
+  teamId?: number;
+}

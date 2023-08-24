@@ -4,9 +4,9 @@ import { CreateTeamDto } from './dto';
 
 @Controller('team')
 export class TeamController {
-    constructor(private employeeService: TeamService) {}
+    constructor(private employeeService: TeamService) { }
     @Post()
-    createTeam (@Body() dto: CreateTeamDto,
+    createTeam(@Body() dto: CreateTeamDto,
     ) {
         return this.employeeService.createTeam(dto);
     }

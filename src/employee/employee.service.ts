@@ -4,8 +4,8 @@ import { CreateEmployeeDto, EditEmployeeDto } from './dto';
 
 @Injectable()
 export class EmployeeService {
-    constructor(private prisma: PrismaService) {}
-    
+    constructor(private prisma: PrismaService) { }
+
     async getEmployeesWithSkills() {
         const employee = this.prisma.employee.findMany({
             include: {
@@ -19,7 +19,7 @@ export class EmployeeService {
         return employee;
     }
 
-    async getEmployeesWithSkillsById(employeeId:number) {
+    async getEmployeesWithSkillsById(employeeId: number) {
         const employee = this.prisma.employee.findUnique({
             where: {
                 id: employeeId
@@ -28,7 +28,7 @@ export class EmployeeService {
         return employee;
     }
 
-    async createEmployee (dto : CreateEmployeeDto) {
+    async createEmployee(dto: CreateEmployeeDto) {
         const employee = await this.prisma.employee.create({
             data: {
                 firstname: dto.firstname,
@@ -45,25 +45,25 @@ export class EmployeeService {
         return employee;
     }
 
-    async editEmployee (dto : EditEmployeeDto, employeeId : number) {
+    async editEmployee(dto: EditEmployeeDto, employeeId: number) {
         const editEmployee = await this.prisma.employee.update({
             where: {
                 id: employeeId,
-              },
-              data: {
+            },
+            data: {
                 lastname: dto.lastname,
                 firstname: dto.firstname,
                 job: dto.job,
                 personality: dto.personality,
                 teamId: dto.teamId,
             },
-           
+
         });
         return editEmployee
-        
+
     }
 
-    async deleteEmployee (employeeId: number) {
+    async deleteEmployee(employeeId: number) {
         await this.prisma.employee.delete({
             where: {
                 id: employeeId,
