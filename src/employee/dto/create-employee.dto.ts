@@ -19,7 +19,4 @@ import {
     personality: string;
     @IsNotEmpty()  
     teamId: number;
-    @IsString()
-    @IsNotEmpty()
-    skills: string;
   }

@@ -80,7 +80,6 @@ import { CreateTeamDto } from 'src/team/dto';
               job:'developper',
               personality: 'introvert',
               teamId: 1,
-              skills: 'dev', 
             };
             it('should create employee', () => {
               return pactum

@@ -30,15 +30,6 @@ export class EmployeeService {
                     },
                 },
                 personality: dto.personality,
-                skills: {
-                    create: [{
-                        skill: {
-                            create: {
-                                name: dto.skills,
-                            },
-                        },
-                    }],
-                },
             },
         });
         return employee;
