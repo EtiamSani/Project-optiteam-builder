@@ -51,11 +51,7 @@ export class EmployeeService {
                 id: employeeId,
             },
             data: {
-                lastname: dto.lastname,
-                firstname: dto.firstname,
-                job: dto.job,
-                personality: dto.personality,
-                teamId: dto.teamId,
+               ...dto
             },
 
         });
