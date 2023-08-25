@@ -15,4 +15,22 @@ export class TeamService {
             }
         });
     }
+
+    async getByTeamWithEmployees(teamId: number) {
+        const team = await this.prisma.team.findUnique({
+            where: {
+                id: teamId
+            },
+            include: {
+                employees: {
+                    include: {
+                        team: true,
+                        skills: true
+                    }
+                }
+            }
+        });
+        return team;
+    }    
+    
 }
