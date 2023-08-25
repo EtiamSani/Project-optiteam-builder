@@ -4,29 +4,31 @@ import { CreateTeamDto } from './dto';
 
 @Controller('team')
 export class TeamController {
-    constructor(private employeeService: TeamService) { }
+    constructor(private teamService: TeamService) { }
 
     @Post()
     createTeam(@Body() dto: CreateTeamDto,
     ) {
-        return this.employeeService.createTeam(dto);
+        return this.teamService.createTeam(dto);
     }
 
     @Get(':id')
-    getByTeamWithEmployees(@Param('id', ParseIntPipe) employeeId: number) {
+    getByTeamWithEmployees(@Param('id', ParseIntPipe) teamId: number) {
 
-        return this.employeeService.getByTeamWithEmployees();
+        return this.teamService.getByTeamWithEmployees(teamId);
     }
 
     @Patch(':id')
-    editTeam(@Param('id', ParseIntPipe) employeeId: number) {
-        return this.employeeService.editTeam();
+    editTeam(@Param('id', ParseIntPipe) teamId: number, @Body() dto: CreateTeamDto) {
+        return this.teamService.editTeam(dto,teamId);
     }
 
     @HttpCode(HttpStatus.NO_CONTENT)
     @Delete(':id')
-    deleteTeam(@Param('id', ParseIntPipe) employeeId: number) {
-
+    deleteTeam(@Param('id', ParseIntPipe) teamId: number) {
+        return this.teamService.deleteTeam(
+            teamId,
+        );
     }
 
 
