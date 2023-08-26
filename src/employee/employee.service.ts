@@ -7,7 +7,7 @@ export class EmployeeService {
     constructor(private prisma: PrismaService) { }
 
     async getEmployeesWithSkills() {
-        const employee = this.prisma.employee.findMany({
+        return this.prisma.employee.findMany({
             include: {
                 skills: {
                     include: {
@@ -16,20 +16,18 @@ export class EmployeeService {
                 }
             }
         });
-        return employee;
     }
 
     async getEmployeesWithSkillsById(employeeId: number) {
-        const employee = this.prisma.employee.findUnique({
+       return this.prisma.employee.findUnique({
             where: {
                 id: employeeId
             }
         })
-        return employee;
     }
 
     async createEmployee(dto: CreateEmployeeDto) {
-        const employee = await this.prisma.employee.create({
+        return this.prisma.employee.create({
             data: {
                 firstname: dto.firstname,
                 lastname: dto.lastname,
@@ -42,11 +40,10 @@ export class EmployeeService {
                 personality: dto.personality,
             },
         });
-        return employee;
     }
 
     async editEmployee(dto: EditEmployeeDto, employeeId: number) {
-        const editEmployee = await this.prisma.employee.update({
+        return this.prisma.employee.update({
             where: {
                 id: employeeId,
             },
@@ -55,8 +52,6 @@ export class EmployeeService {
             },
 
         });
-        return editEmployee
-
     }
 
     async deleteEmployee(employeeId: number) {

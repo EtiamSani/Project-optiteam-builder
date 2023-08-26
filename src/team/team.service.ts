@@ -17,7 +17,7 @@ export class TeamService {
     }
 
     async getByTeamWithEmployees(teamId: number) {
-        const team = await this.prisma.team.findUnique({
+       return this.prisma.team.findUnique({
             where: {
                 id: teamId
             },
@@ -30,22 +30,24 @@ export class TeamService {
                 }
             }
         });
-        return team;
     }    
     
 
     async editTeam (teamId: number, @Body() dto: EditTeamDto) {
-        const team = await this.prisma.team.update({
+        return this.prisma.team.update({
             where : {
                 id: teamId
             }, data : {
                 ...dto
             }
         })
-        return team;
     }
 
     async deleteTeam (teamId: number) {
-
+        return this.prisma.team.delete({
+            where : {
+                id: teamId
+            }
+        })
     }
 }

@@ -97,7 +97,7 @@ describe('EmployeeController (e2e)', () => {
 
       describe('Edit employee', () => {
         const dto: EditEmployeeDto = {
-          lastname: 'BOB Edit',
+          lastname: 'BOBEdit',
         };
         it('should edit employee', () => {
           return pactum
