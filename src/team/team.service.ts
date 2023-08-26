@@ -1,5 +1,5 @@
 import { Body, Injectable } from '@nestjs/common';
-import { CreateTeamDto } from './dto';
+import { CreateTeamDto, EditTeamDto } from './dto';
 import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
@@ -34,7 +34,7 @@ export class TeamService {
     }    
     
 
-    async editTeam (teamId: number, @Body() dto: CreateTeamDto) {
+    async editTeam (teamId: number, @Body() dto: EditTeamDto) {
         const team = await this.prisma.team.update({
             where : {
                 id: teamId

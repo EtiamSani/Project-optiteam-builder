@@ -3,9 +3,8 @@ import {
     IsString,
 } from 'class-validator';
 
-export class CreateTeamDto {
+export class EditSkillsDto {
     @IsString()
     @IsNotEmpty()
     name: string;
-
 }

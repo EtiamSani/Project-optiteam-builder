@@ -6,9 +6,10 @@ import { AuthModule } from './auth/auth.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { EmployeeModule } from './employee/employee.module';
 import { TeamModule } from './team/team.module';
+import { SkillsModule } from './skills/skills.module';
 
 @Module({
   //configModule c'est pour charger notre .env dans notre application
-  imports: [UserModule, AuthModule, PrismaModule, ConfigModule.forRoot({isGlobal: true,}), EmployeeModule, TeamModule],
+  imports: [UserModule, AuthModule, PrismaModule, ConfigModule.forRoot({isGlobal: true,}), EmployeeModule, TeamModule, SkillsModule],
 })
 export class AppModule {}
