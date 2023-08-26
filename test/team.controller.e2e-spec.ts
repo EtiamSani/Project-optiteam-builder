@@ -59,14 +59,15 @@ import {
     })
 
       describe('Get team', () => {
-        it('should gett team by id with employees', () => {
+        it('should get team by id with employees', () => {
             return pactum
               .spec()
-              .get('/team')
+              .get('/team/{id}')
+              .withPathParams('id', '$S{teamId}')
               // .withHeaders({
               //   Authorization: 'Bearer $S{userAt}',
               // })
-              .expectStatus(201)
+              .expectStatus(200)
           });
       });
 

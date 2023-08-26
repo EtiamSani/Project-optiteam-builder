@@ -20,7 +20,7 @@ export class TeamController {
 
     @Patch(':id')
     editTeam(@Param('id', ParseIntPipe) teamId: number, @Body() dto: CreateTeamDto) {
-        return this.teamService.editTeam(dto,teamId);
+        return this.teamService.editTeam(teamId, dto);
     }
 
     @HttpCode(HttpStatus.NO_CONTENT)

@@ -33,4 +33,19 @@ export class TeamService {
         return team;
     }    
     
+
+    async editTeam (teamId: number, @Body() dto: CreateTeamDto) {
+        const team = await this.prisma.team.update({
+            where : {
+                id: teamId
+            }, data : {
+                ...dto
+            }
+        })
+        return team;
+    }
+
+    async deleteTeam (teamId: number) {
+
+    }
 }
