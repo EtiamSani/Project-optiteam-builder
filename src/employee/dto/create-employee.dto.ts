@@ -1,6 +1,5 @@
 import {
   IsNotEmpty,
-  IsOptional,
   IsString,
 } from 'class-validator';
 
@@ -19,4 +18,7 @@ export class CreateEmployeeDto {
   personality: string;
   @IsNotEmpty()
   teamId: number;
+
+  
+  profilepicture?: string;
 }

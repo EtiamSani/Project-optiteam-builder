@@ -40,6 +40,7 @@ export class EmployeeService {
                     },
                 },
                 personality: dto.personality,
+                profilepicture: 'public/profile-default.png',
             },
         });
     }
@@ -73,11 +74,6 @@ export class EmployeeService {
     if (!employee) {
       throw new NotFoundException('Employee not found');
     }
-
-    // Mettez à jour les propriétés pertinentes de l'employé, y compris le nom du fichier
-    // if (updatedDto.profilepicture) {
-    //   employee.profilepicture = updatedDto.profilepicture;
-    // }
 
     return this.prisma.employee.update({
         where: {

@@ -42,7 +42,6 @@ export class EmployeeController {
     }
 
     @Post(':id/profile-picture')
-    // @Post('profile-picture')
     @UseInterceptors(FileInterceptor('file', {
         storage: diskStorage({
             destination : "./public/profilePictures",
@@ -64,16 +63,4 @@ export class EmployeeController {
     
         return this.employeeService.editEmployeeProfilePicture(updatedDto, employeeId,);
       }
-    
-    //Ca ca marche
-    // uploadFile(@UploadedFile() file): Observable<Object>{
-    //     return of({imagePath: file.path});
-    // }
-
-    // async createProfilePicture(@Param('id', ParseIntPipe) employeeId: number, @Body() dto: EditEmployeeDto, @UploadedFile() file: Express.Multer.File,) {
-    //     const { originalname } = file;
-    //     const updatedDto = { ...dto, profile: originalname };
-    //     return this.employeeService.editEmployeeProfilePicture(updatedDto, employeeId);
-       
-    // }
 }
