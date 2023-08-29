@@ -7,9 +7,14 @@ import { PrismaModule } from './prisma/prisma.module';
 import { EmployeeModule } from './employee/employee.module';
 import { TeamModule } from './team/team.module';
 import { SkillsModule } from './skills/skills.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   //configModule c'est pour charger notre .env dans notre application
-  imports: [UserModule, AuthModule, PrismaModule, ConfigModule.forRoot({isGlobal: true,}), EmployeeModule, TeamModule, SkillsModule],
+  imports: [UserModule, AuthModule, PrismaModule, ConfigModule.forRoot({isGlobal: true,}), EmployeeModule, TeamModule, SkillsModule,ServeStaticModule.forRoot({
+    rootPath: join(__dirname, '..', 'public'), 
+    serveRoot: '/public', // L'URL à laquelle les ressources statiques seront servies
+  })],
 })
 export class AppModule {}

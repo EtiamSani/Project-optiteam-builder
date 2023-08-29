@@ -1,6 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateEmployeeDto, EditEmployeeDto } from './dto';
+import { Employee } from '@prisma/client';
+
 
 @Injectable()
 export class EmployeeService {
@@ -60,5 +62,30 @@ export class EmployeeService {
                 id: employeeId,
             }
         })
+    }
+
+    async editEmployeeProfilePicture(updatedDto : EditEmployeeDto, employeeId: number): Promise<Employee>{
+        const employee = await this.prisma.employee.findUnique({
+            where: {
+                id : employeeId
+            },
+        });
+    if (!employee) {
+      throw new NotFoundException('Employee not found');
+    }
+
+    // Mettez à jour les propriétés pertinentes de l'employé, y compris le nom du fichier
+    // if (updatedDto.profilepicture) {
+    //   employee.profilepicture = updatedDto.profilepicture;
+    // }
+
+    return this.prisma.employee.update({
+        where: {
+            id: employeeId,
+          },
+          data: {
+            ...updatedDto
+          },
+    })
     }
 }

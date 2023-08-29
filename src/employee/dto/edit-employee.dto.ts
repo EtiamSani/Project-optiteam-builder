@@ -31,4 +31,6 @@ export class EditEmployeeDto {
   @IsNotEmpty()
   @IsOptional()
   teamId?: number;
+
+  profilepicture?: string;
 }
