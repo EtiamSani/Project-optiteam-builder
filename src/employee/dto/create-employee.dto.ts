@@ -17,7 +17,7 @@ export class CreateEmployeeDto {
   @IsNotEmpty()
   personality: string;
   @IsNotEmpty()
-  teamId: number;
+  teamId?: number;
 
   
   profilepicture?: string;
