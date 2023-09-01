@@ -1,5 +1,6 @@
 import {
   IsNotEmpty,
+  IsOptional,
   IsString,
 } from 'class-validator';
 
@@ -16,9 +17,7 @@ export class CreateEmployeeDto {
   @IsString()
   @IsNotEmpty()
   personality: string;
-  @IsNotEmpty()
-  teamId?: number;
-
-  
+  @IsOptional()
+  teamId?: number;  
   profilepicture?: string;
 }

@@ -28,7 +28,8 @@ export class EmployeeService {
         })
     }
 
-    async createEmployee(dto: CreateEmployeeDto) {
+    async createEmployee(dto: CreateEmployeeDto) {    
+      console.log('teamId:', dto.teamId); // Ajout du console.log
         return this.prisma.employee.create({
             data: {
                 firstname: dto.firstname,
@@ -58,11 +59,37 @@ export class EmployeeService {
     }
 
     async deleteEmployee(employeeId: number) {
-        await this.prisma.employee.delete({
-            where: {
-                id: employeeId,
-            }
-        })
+      const employee = await this.prisma.employee.findUnique({
+        where: {
+          id: employeeId,
+        },
+      });
+    
+      if (!employee) {
+        // Gérer le cas où l'employé n'existe pas
+        return;
+      }
+    
+      // Première étape : Déconnecter l'employé de l'équipe
+      await this.prisma.team.update({
+        where: {
+          id: employee.teamId,
+        },
+        data: {
+          employees: {
+            disconnect: {
+              id: employeeId,
+            },
+          },
+        },
+      });
+    
+      // Deuxième étape : Supprimer l'employé
+      await this.prisma.employee.delete({
+        where: {
+          id: employeeId,
+        },
+      });
     }
 
     async editEmployeeProfilePicture(updatedDto : EditEmployeeDto, employeeId: number): Promise<Employee>{

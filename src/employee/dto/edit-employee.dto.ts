@@ -28,7 +28,7 @@ export class EditEmployeeDto {
   @IsOptional()
   personality?: string;
 
-  @IsNotEmpty()
+  
   @IsOptional()
   teamId?: number;
 
