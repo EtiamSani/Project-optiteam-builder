@@ -41,7 +41,7 @@ export class EmployeeService {
                     },
                 },
                 personality: dto.personality,
-                profilepicture: 'public/profile-default.png',
+                profilepicture: 'public/profil-default.png',
             },
         });
     }
