@@ -63,4 +63,9 @@ export class EmployeeController {
     
         return this.employeeService.editEmployeeProfilePicture(updatedDto, employeeId,);
       }
+
+      @Post(':employeeId/skill/:skillId')
+      addSkillToEmployee(@Param('employeeId', ParseIntPipe) employeeId: number, @Param('skillId', ParseIntPipe) skillId: number){
+        return this.employeeService.addSkillToEmployee(employeeId,skillId)
+      }
 }

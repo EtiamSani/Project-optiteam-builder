@@ -24,7 +24,18 @@ export class EmployeeService {
        return this.prisma.employee.findUnique({
             where: {
                 id: employeeId
-            }
+            },
+            include: {
+              skills: {
+                include: {
+                  skill: {
+                    select: {
+                      name: true, // Sélectionnez uniquement le nom de chaque compétence
+                    },
+                  },
+                },
+              },
+            },
         })
     }
 
@@ -110,5 +121,18 @@ export class EmployeeService {
             ...updatedDto
           },
     })
+    }
+
+    async addSkillToEmployee( employeeId: number, skillId : number) {
+        return await this.prisma.skillToEmployee.create({
+          data: {
+          employee: {
+            connect: { id: employeeId },
+          },
+          skill: {
+            connect: { id: skillId },
+          },
+        },
+      })
     }
 }
