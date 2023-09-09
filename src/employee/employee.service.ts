@@ -135,4 +135,22 @@ export class EmployeeService {
         },
       })
     }
+
+    async removeSkillFromEmployee(skillId: number) {
+      try {
+       
+        await this.prisma.skillToEmployee.delete({
+          where: {
+            id: skillId,
+          },
+        });
+  
+     
+        return { success: true, message: 'Compétence supprimée avec succès.' };
+      } catch (error) {
+       
+        console.error('Erreur lors de la suppression de la compétence :', error);
+        throw error;
+      }
+    }
 }

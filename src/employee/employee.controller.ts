@@ -68,4 +68,9 @@ export class EmployeeController {
       addSkillToEmployee(@Param('employeeId', ParseIntPipe) employeeId: number, @Param('skillId', ParseIntPipe) skillId: number){
         return this.employeeService.addSkillToEmployee(employeeId,skillId)
       }
+
+      @Delete('/skill/:skillId')
+      removeSkillFromEmployee(@Param('skillId', ParseIntPipe) skillId: number){
+        return this.employeeService.removeSkillFromEmployee(skillId)
+      }
 }
