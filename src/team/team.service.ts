@@ -23,13 +23,24 @@ export class TeamService {
             },
             include: {
                 employees: {
-                    include: {
-                        team: true,
-                        skills: true
+                  include: {
+                    employee: {
+                      include: {
+                        skills: { // Incluez les compétences de l'employé ici
+                          select: {
+                            skill: {
+                              select: {
+                                name: true
+                              }
+                            }
+                          }
+                        }
+                      }
                     }
+                  }
                 }
-            }
-        });
+              }
+        }); 
     }    
     
 
@@ -48,6 +59,19 @@ export class TeamService {
             where : {
                 id: teamId
             }
+        })
+    }
+
+    async addEmployeeToTeam(teamId: number,employeeId: number) {
+        return this.prisma.teamHasEmployee.create({
+            data: {
+                team: {
+                  connect: { id: teamId },
+                },
+                employee: {
+                  connect: { id: employeeId },
+                },
+              },
         })
     }
 }

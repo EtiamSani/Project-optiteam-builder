@@ -81,19 +81,6 @@ export class EmployeeService {
         return;
       }
     
-      // Première étape : Déconnecter l'employé de l'équipe
-      await this.prisma.team.update({
-        where: {
-          id: employee.teamId,
-        },
-        data: {
-          employees: {
-            disconnect: {
-              id: employeeId,
-            },
-          },
-        },
-      });
     
       // Deuxième étape : Supprimer l'employé
       await this.prisma.employee.delete({

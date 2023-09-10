@@ -31,6 +31,11 @@ export class TeamController {
         );
     }
 
+    @Post(':teamId/employee/:employeeId')
+      addEmployeeToTeam(@Param('teamId', ParseIntPipe) teamId: number, @Param('employeeId', ParseIntPipe) employeeId: number){
+        return this.teamService.addEmployeeToTeam(teamId,employeeId)
+      }
+
 
 
 }
