@@ -26,7 +26,7 @@ export class TeamService {
                   include: {
                     employee: {
                       include: {
-                        skills: { // Incluez les compétences de l'employé ici
+                        skills: { 
                           select: {
                             skill: {
                               select: {

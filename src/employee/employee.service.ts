@@ -30,7 +30,7 @@ export class EmployeeService {
                 include: {
                   skill: {
                     select: {
-                      name: true, // Sélectionnez uniquement le nom de chaque compétence
+                      name: true, // uniquement le nom de chaque compétence
                     },
                   },
                 },
@@ -40,7 +40,7 @@ export class EmployeeService {
     }
 
     async createEmployee(dto: CreateEmployeeDto) {    
-      console.log('teamId:', dto.teamId); // Ajout du console.log
+      console.log('teamId:', dto.teamId);
         return this.prisma.employee.create({
             data: {
                 firstname: dto.firstname,
@@ -70,19 +70,7 @@ export class EmployeeService {
     }
 
     async deleteEmployee(employeeId: number) {
-      const employee = await this.prisma.employee.findUnique({
-        where: {
-          id: employeeId,
-        },
-      });
-    
-      if (!employee) {
-        // Gérer le cas où l'employé n'existe pas
-        return;
-      }
-    
-    
-      // Deuxième étape : Supprimer l'employé
+      
       await this.prisma.employee.delete({
         where: {
           id: employeeId,
