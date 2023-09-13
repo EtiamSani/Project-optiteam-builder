@@ -15,7 +15,7 @@ model User {
   username String
   email    String  @unique
   password String
-  team     Team?   @relation(fields: [teamId], references: [id])
+  team     Team?   @relation(fields: [teamId], references: [id], onDelete: Cascade)
   teamId   Int?
 }
 
@@ -45,20 +45,22 @@ model Skill {
 
 model SkillToEmployee {
   id        Int     @id @default(autoincrement())
-  employee  Employee @relation(fields: [employeeId], references: [id])
+  employee  Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
   employeeId Int
-  skill     Skill   @relation(fields: [skillId], references: [id])
+  skill     Skill   @relation(fields: [skillId], references: [id], onDelete: Cascade)
   skillId   Int
   teamHasEmployee TeamHasEmployee[]
+  
 }
 
 model TeamHasEmployee {
   id    Int @id @default(autoincrement())
-  employee  Employee @relation(fields: [employeeId], references: [id])
+  employee  Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
   employeeId Int
-  team  Team @relation(fields: [teamId], references: [id])
+  team  Team @relation(fields: [teamId], references: [id], onDelete: Cascade)
   teamId Int
   skills  SkillToEmployee[]
+ 
 }
 
 

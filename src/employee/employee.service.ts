@@ -46,11 +46,6 @@ export class EmployeeService {
                 firstname: dto.firstname,
                 lastname: dto.lastname,
                 job: dto.job,
-                team: {
-                    connect: {
-                        id: dto.teamId,
-                    },
-                },
                 personality: dto.personality,
                 profilepicture: 'public/profil-default.png',
             },
