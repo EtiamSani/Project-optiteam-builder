@@ -36,6 +36,9 @@ export class TeamController {
         return this.teamService.addEmployeeToTeam(teamId,employeeId)
       }
 
-
+    @Delete('/employee/:id')
+      deleteEmployeeFromTeam(@Param('id', ParseIntPipe) id: number) {
+        return this.teamService.deleteEmployeeFromTeam(id)
+      }
 
 }

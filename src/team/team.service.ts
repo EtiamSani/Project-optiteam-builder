@@ -74,4 +74,12 @@ export class TeamService {
               },
         })
     }
+
+    async deleteEmployeeFromTeam(id: number){
+      return this.prisma.teamHasEmployee.delete({
+        where : {
+          id: id
+        }
+      })
+    }
 }
