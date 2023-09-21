@@ -43,6 +43,9 @@ export class TeamService {
         }); 
     }    
     
+    async getTeam(){
+      return this.prisma.team.findMany()
+    }
 
     async editTeam (teamId: number, @Body() dto: EditTeamDto) {
         return this.prisma.team.update({

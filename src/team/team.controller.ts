@@ -18,6 +18,11 @@ export class TeamController {
         return this.teamService.getByTeamWithEmployees(teamId);
     }
 
+    @Get()
+    getTeam() {
+        return this.teamService.getTeam();
+    }
+
     @Patch(':id')
     editTeam(@Param('id', ParseIntPipe) teamId: number, @Body() dto: CreateTeamDto) {
         return this.teamService.editTeam(teamId, dto);
