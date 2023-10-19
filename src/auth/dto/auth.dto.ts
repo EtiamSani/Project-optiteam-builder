@@ -12,4 +12,6 @@ export class AuthDto {
     @IsString()
     @IsNotEmpty()
     username?: string;
+    @IsNotEmpty()
+    teamId: any;
 }

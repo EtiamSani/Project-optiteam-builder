@@ -40,7 +40,7 @@ export class EmployeeService {
     }
 
     async createEmployee(dto: CreateEmployeeDto) {    
-      console.log('teamId:', dto.teamId);
+      
         return this.prisma.employee.create({
             data: {
                 firstname: dto.firstname,

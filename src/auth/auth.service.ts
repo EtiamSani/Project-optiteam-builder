@@ -17,10 +17,7 @@ export class AuthService {
     }
 
     async signup(dto : AuthDto) {
-        const password = await argon.hash(dto.password);
-        // const prismaErrorHandler = new PrismaErrorHandler();
-        // const errorHandler = new ErrorHandler([prismaErrorHandler]);
-        
+        const password = await argon.hash(dto.password); 
         try {
             
             const user = await this.prisma.user.create({
@@ -28,10 +25,11 @@ export class AuthService {
                     email: dto.email,
                     password,
                     username :dto.username,
+                    teamId: dto.teamId
                 },
     
             });
-            return this.signToken(user.id, user.email);
+            return this.signToken(user.id, user.email, user.teamId);
         } catch(error) {
             // récupérer les erreurs envoyé par prisma
             if (error instanceof PrismaClientKnownRequestError) { 
@@ -59,10 +57,10 @@ export class AuthService {
     if (!passwordMatches)
     throw new CredentialsIncorrectException();
 
-        return this.signToken(user.id, user.email);
+        return this.signToken(user.id, user.email, user.teamId);
     }
 
-   async signToken(userId: number, email:string): Promise<{ acces_token: string }>{
+   async signToken(userId: number, email:string, teamId:number): Promise<{ acces_token: string }>{
     const payload = {
         sub: userId,
         email
