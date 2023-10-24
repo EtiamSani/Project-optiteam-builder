@@ -5,7 +5,7 @@ import * as argon from 'argon2';
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { JwtService } from "@nestjs/jwt";
 import { ConfigService } from "@nestjs/config";
-// import {ErrorHandler, PrismaErrorHandler } from "./src/errors";
+
 import { CredentialsIncorrectException } from "../errors/httpExeption";
 import { ErrorHandlerService } from "../errors/errorHandler.service";
 
