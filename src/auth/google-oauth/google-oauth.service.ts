@@ -27,7 +27,7 @@ export class GoogleOauthService {
    
     const { email, username } = user;
 
-     // Vérifiez si l'utilisateur existe dans la base de données
+     
      let existingUser = await this.prisma.user.findUnique({
       where: {
         email: email,
@@ -39,8 +39,8 @@ export class GoogleOauthService {
       existingUser = await this.googleSignup({ email, username });
       return res.status(200).json({ message: 'User information saved' });
     } else {
-      res.setHeader('Authorization', 'Bearer ' + googleAccessToken);
-      return res.status(200).json({ message: 'User connected' });
+      
+      return res.status(200).json({ message: 'User connected', googleAccessToken });
     }
     
   } catch (error) {
@@ -61,9 +61,57 @@ async googleSignup(data) {
     });
    return user
   } catch (error) {
-    // Handle any errors that occur during user creation
+    
   }
 }
 
+async login({
+  email, name, image, teamId
+}: {email: string;
+  name: string;
+  image: string;
+  teamId: any
+}): Promise<any> {
+  let existingUser = await this.prisma.user.findUnique({
+    where: {
+      email: email,
+    },
+  });
+
+  if(!existingUser){
+    try {
+      const user = await this.prisma.user.create({
+        data: {
+          email: email,
+          username: name, 
+          teamId: teamId
+        },
+      });
+      console.log('USER CREATED', user)
+     return user
+
+    } catch (error) {
+      console.error(error)
+    }
+  } else {
+    return this.signToken(existingUser.id, existingUser.email, existingUser.teamId);
+  }
+}
+async signToken(userId: number, email:string, teamId:number): Promise<{ acces_token: string }>{
+  const payload = {
+      sub: userId,
+      email
+  }
+
+  const secret = this.config.get('JWT_SECRET');
+
+  const token = await this.jwt.signAsync(payload, {
+      expiresIn: '15m',
+      secret: secret
+  });
+  return {
+      acces_token: token,
+  };
+}
 
 }
