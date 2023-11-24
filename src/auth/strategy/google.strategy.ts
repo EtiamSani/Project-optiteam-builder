@@ -9,7 +9,6 @@ export class GoogleOauthStrategy extends PassportStrategy(Strategy, 'google') {
     configService: ConfigService,
   ) {
     super({
-      // Put config in `.env`
       clientID: configService.get<string>('OAUTH_GOOGLE_ID'),
       clientSecret: configService.get<string>('OAUTH_GOOGLE_SECRET'),
       callbackURL: configService.get<string>('OAUTH_GOOGLE_REDIRECT_URL'),
@@ -23,12 +22,11 @@ export class GoogleOauthStrategy extends PassportStrategy(Strategy, 'google') {
     profile: Profile,
     done: VerifyCallback,
   ) {
-    // console.log(_accessToken, 'acces token')
-    // console.log(_refreshToken, 'refresh token')
+    
     const { id, name, emails } = profile;
     console.log(profile, profile)
 
-   const user = {
+    const user = {
     email: emails[0].value,
     firstName: name.givenName,
     username:  name.givenName + name.familyName,

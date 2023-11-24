@@ -10,9 +10,9 @@ import { Observable, of } from 'rxjs';
 export class EmployeeController {
     constructor(private employeeService: EmployeeService) { }
 
-    @Get()
-    getEmployees() {
-        return this.employeeService.getEmployeesWithSkills();
+    @Get(':userId')
+    getEmployees(@Param('userId', ParseIntPipe) userId:number) {
+        return this.employeeService.getEmployeesWithSkills(userId);
     }
 
     @Get(':id')

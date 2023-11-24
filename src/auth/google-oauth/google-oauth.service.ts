@@ -99,8 +99,9 @@ async login({
 }
 async signToken(userId: number, email:string, teamId:number): Promise<{ acces_token: string }>{
   const payload = {
-      sub: userId,
-      email
+      userId: userId,
+      email,
+      teamId
   }
 
   const secret = this.config.get('JWT_SECRET');

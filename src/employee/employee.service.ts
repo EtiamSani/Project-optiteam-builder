@@ -8,17 +8,20 @@ import { Employee } from '@prisma/client';
 export class EmployeeService {
     constructor(private prisma: PrismaService) { }
 
-    async getEmployeesWithSkills() {
-        return this.prisma.employee.findMany({
-            include: {
-                skills: {
-                    include: {
-                        skill: true
-                    }
-                }
-            }
-        });
-    }
+    async getEmployeesWithSkills(userId: number) {
+      return this.prisma.employee.findMany({
+          where: {
+              id: userId // Filtrer les employés en fonction de l'ID de l'utilisateur
+          },
+          include: {
+              skills: {
+                  include: {
+                      skill: true
+                  }
+              }
+          }
+      });
+  }
 
     async getEmployeesWithSkillsById(employeeId: number) {
        return this.prisma.employee.findUnique({
