@@ -10,9 +10,9 @@ import { Observable, of } from 'rxjs';
 export class EmployeeController {
     constructor(private employeeService: EmployeeService) { }
 
-    @Get(':userId')
-    getEmployees(@Param('userId', ParseIntPipe) userId:number) {
-        return this.employeeService.getEmployeesWithSkills(userId);
+    @Get(':teamId')
+    getEmployees(@Param('teamId', ParseIntPipe) teamId:number) {
+        return this.employeeService.getEmployeesWithSkills(teamId);
     }
 
     @Get(':id')
@@ -21,8 +21,9 @@ export class EmployeeController {
     }
 
     @Post()
-    createEmployee(@Body() dto: CreateEmployeeDto,
+    createEmployee(@Body() dto: CreateEmployeeDto
     ) {
+        console.log('dto in controller', dto)
         return this.employeeService.createEmployee(dto);
     }
 

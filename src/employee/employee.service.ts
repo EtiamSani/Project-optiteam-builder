@@ -8,20 +8,24 @@ import { Employee } from '@prisma/client';
 export class EmployeeService {
     constructor(private prisma: PrismaService) { }
 
-    async getEmployeesWithSkills(userId: number) {
+    async getEmployeesWithSkills(teamId: number) {
       return this.prisma.employee.findMany({
-          where: {
-              id: userId // Filtrer les employés en fonction de l'ID de l'utilisateur
-          },
-          include: {
-              skills: {
-                  include: {
-                      skill: true
-                  }
-              }
+        where: {
+          team: {
+            some: {
+              teamId: teamId
+            }
           }
+        },
+        include: {
+          skills: {
+            include: {
+              skill: true
+            }
+          }
+        }
       });
-  }
+    }
 
     async getEmployeesWithSkillsById(employeeId: number) {
        return this.prisma.employee.findUnique({
@@ -42,17 +46,20 @@ export class EmployeeService {
         })
     }
 
-    async createEmployee(dto: CreateEmployeeDto) {    
-      
-        return this.prisma.employee.create({
-            data: {
-                firstname: dto.firstname,
-                lastname: dto.lastname,
-                job: dto.job,
-                personality: dto.personality,
-                profilepicture: 'public/profil-default.png',
-            },
-        });
+    // TODO 
+    async createEmployee(dto: CreateEmployeeDto) {   
+      console.log(dto)
+      console.log(dto.userId, 'userid')
+      return this.prisma.employee.create({
+        data: {
+          firstname: dto.firstname,
+          lastname: dto.lastname,
+          job: dto.job,
+          personality: dto.personality,
+          profilepicture: 'public/profil-default.png',
+          userId: dto.userId
+        },
+      });
     }
 
     async editEmployee(dto: EditEmployeeDto, employeeId: number) {

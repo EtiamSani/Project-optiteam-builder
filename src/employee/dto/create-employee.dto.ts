@@ -20,4 +20,7 @@ export class CreateEmployeeDto {
   @IsOptional()
   teamId?: number;  
   profilepicture?: string;
+  
+  @IsNotEmpty()
+  userId: number;
 }

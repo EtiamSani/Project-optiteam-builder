@@ -17,6 +17,7 @@ model User {
   password String?
   team     Team?   @relation(fields: [teamId], references: [id], onDelete: Cascade)
   teamId   Int?
+  employees Employee[]
 }
 
 model Team {
@@ -35,6 +36,8 @@ model Employee {
   personality  String?
   team         TeamHasEmployee[]
   skills       SkillToEmployee[]
+  user         User?      @relation(fields: [userId], references: [id], onDelete: SetNull)
+  userId       Int?       
 }
 
 model Skill {
