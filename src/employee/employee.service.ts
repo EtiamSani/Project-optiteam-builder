@@ -8,14 +8,10 @@ import { Employee } from '@prisma/client';
 export class EmployeeService {
     constructor(private prisma: PrismaService) { }
 
-    async getEmployeesWithSkills(teamId: number) {
+    async getEmployeesWithSkills(userId: number) {
       return this.prisma.employee.findMany({
         where: {
-          team: {
-            some: {
-              teamId: teamId
-            }
-          }
+          userId: userId
         },
         include: {
           skills: {
@@ -46,10 +42,7 @@ export class EmployeeService {
         })
     }
 
-    // TODO 
     async createEmployee(dto: CreateEmployeeDto) {   
-      console.log(dto)
-      console.log(dto.userId, 'userid')
       return this.prisma.employee.create({
         data: {
           firstname: dto.firstname,
